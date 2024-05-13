@@ -4,29 +4,32 @@ runme:
   version: v3
 ---
 
-# 🐱EniQilo
+# 👩‍⚕️Halo Suster
 
-EniQilo is an app that allows staff to add product and customer to buy the products from the store.
+HaloSuster is an app that nurses to record patient medical records
 
 ## 🌟Features
 
-EniQilo offers the following features:
+HaloSuster offers the following features:
 
 - **Authentication**:
-- Staff registration
-- Staff login
-- **Product Management (CRUD)**:
-- Create new product
-- View existing product
-- Update product
-- Delete product
-- **Search SKU**:
-- Search product by SKU
-- **Checkout**:
-- Customer registration
-- View customers
-- Checkout products
-- View checkout history
+- User IT registration
+- User IT login
+- User Nurse registration
+- User Nurse login
+- **Nurse Management (CRUD)**:
+- Add Nurse
+- View Users
+- Update Nurse
+- Delete Nurse
+- Grant Nurse Access
+- **Manage Medical Record**:
+- Add Medical Patient
+- View Medical Patients
+- Add Medical Record
+- View Medical Records
+- **Image Upload**:
+- Upload Image
 
 ## ⛔️ Requirements
 
@@ -46,7 +49,7 @@ To run the application, follow these steps before run the program:
 
 ```bash {"id":"01HXBJ7XEECXDYSM92BBJFY4V5"}
 
-git clone https://github.com/sedelinggam/eniqilo.git
+git clone https://github.com/sedelinggam/halo-suster.git
 
 ```
 
@@ -54,7 +57,7 @@ git clone https://github.com/sedelinggam/eniqilo.git
 
 ```bash {"id":"01HXBJ7XEECXDYSM92BC18F9P1"}
 
-cd eniqilo
+cd halo-suster
 
 ```
 
@@ -117,7 +120,7 @@ Adjust the `.env` file to make sure it's connected to the database and then you 
 make build-image
 ```
 
-After the image is build, you can run it using:
+After the image is build, adjust the `.env` and you can run it using:
 ```bash
-docker run -p 8080:8080 eniqilo -d
+make run-image
 ```
