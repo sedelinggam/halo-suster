@@ -15,7 +15,6 @@ HaloSuster offers the following features:
 - **Authentication**:
 - User IT registration
 - User IT login
-- User Nurse registration
 - User Nurse login
 - **Nurse Management (CRUD)**:
 - Add Nurse
@@ -39,6 +38,7 @@ Before running this app make sure you have this installed on your puter :
 - [PostgreSQL](https://www.postgresql.org/download/)
 - [golang-migrate](https://github.com/golang-migrate/migrate)
 - [docker](https://docs.docker.com/engine/install/ubuntu/)
+- [AWS S3](https://aws.amazon.com/s3/)
 
 ## 🎖Prerequisite
 
