@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-type Staff struct {
+type User struct {
 	ID          string    `db:"id"`
 	PhoneNumber string    `db:"phone_number"`
 	Name        string    `db:"name"`
@@ -15,11 +15,11 @@ type Staff struct {
 	CreatedAt   time.Time `db:"created_at"`
 }
 
-func (s Staff) TableName() string {
-	return `staffs`
+func (s User) TableName() string {
+	return `users`
 }
 
-func (s Staff) CheckPhoneNumber() error {
+func (s User) CheckPhoneNumber() error {
 	if len(s.PhoneNumber) == 0 {
 		return lumen.NewError(lumen.ErrBadRequest, errors.New("phone number not valid"))
 	}
@@ -29,6 +29,6 @@ func (s Staff) CheckPhoneNumber() error {
 	return nil
 }
 
-func (s *Staff) NewPassword(password string) error {
+func (s *User) NewPassword(password string) error {
 	return nil
 }

@@ -1,4 +1,4 @@
-package staffService
+package userService
 
 import (
 	"context"
@@ -10,14 +10,14 @@ import (
 	"halo-suster/package/lumen"
 )
 
-func (ss staffService) Login(ctx context.Context, requestData request.StaffLogin) (*response.UserAccessToken, error) {
+func (ss userService) Login(ctx context.Context, requestData request.UserLogin) (*response.UserAccessToken, error) {
 	//Password Hash
 	var (
 		err error
 	)
 
 	// Find the user by credentials
-	user, err := ss.staffRepo.GetStaffByPhoneNumber(ctx, requestData.PhoneNumber)
+	user, err := ss.userRepo.GetUserByPhoneNumber(ctx, requestData.PhoneNumber)
 	if err != nil {
 		//Duplicate unique key
 		if lumen.CheckErrorSQLNotFound(err) {

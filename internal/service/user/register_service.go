@@ -1,4 +1,4 @@
-package staffService
+package userService
 
 import (
 	"context"
@@ -13,7 +13,7 @@ import (
 	"github.com/google/uuid"
 )
 
-func (ss staffService) Register(ctx context.Context, requestData request.StaffRegister) (*response.UserAccessToken, error) {
+func (ss userService) Register(ctx context.Context, requestData request.UserRegister) (*response.UserAccessToken, error) {
 	var (
 		err          error
 		hashPassword string
@@ -25,7 +25,7 @@ func (ss staffService) Register(ctx context.Context, requestData request.StaffRe
 		return nil, lumen.NewError(lumen.ErrInternalFailure, err)
 	}
 	//Create User
-	userData := entity.Staff{
+	userData := entity.User{
 		ID:          uuid.New().String(),
 		PhoneNumber: requestData.PhoneNumber,
 		Name:        requestData.Name,
@@ -39,7 +39,7 @@ func (ss staffService) Register(ctx context.Context, requestData request.StaffRe
 		return nil, lumen.NewError(lumen.ErrBadRequest, err)
 	}
 
-	err = ss.staffRepo.Create(ctx, userData)
+	err = ss.userRepo.Create(ctx, userData)
 	if err != nil {
 		//Duplicate unique key
 		if lumen.CheckErrorSQLUnique(err) {

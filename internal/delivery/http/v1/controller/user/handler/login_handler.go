@@ -1,4 +1,4 @@
-package staffHandler
+package userHandler
 
 import (
 	"halo-suster/internal/delivery/http/v1/request"
@@ -9,9 +9,9 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func (uh staffHandler) Login(c echo.Context) error {
+func (uh userHandler) Login(c echo.Context) error {
 	var (
-		req  request.StaffLogin
+		req  request.UserLogin
 		resp *response.UserAccessToken
 		err  error
 	)
@@ -28,7 +28,7 @@ func (uh staffHandler) Login(c echo.Context) error {
 		return lumen.FromError(lumen.NewError(lumen.ErrBadRequest, err)).SendResponse(c)
 	}
 
-	resp, err = uh.staffService.Login(c.Request().Context(), req)
+	resp, err = uh.userService.Login(c.Request().Context(), req)
 	if err != nil {
 		return lumen.FromError(err).SendResponse(c)
 	}

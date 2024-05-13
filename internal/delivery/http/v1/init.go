@@ -1,8 +1,8 @@
 package v1
 
 import (
-	staffControllers "halo-suster/internal/delivery/http/v1/controller/staff"
-	staffService "halo-suster/internal/service/staff"
+	userController "halo-suster/internal/delivery/http/v1/controller/user"
+	userService "halo-suster/internal/service/user"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/jmoiron/sqlx"
@@ -14,9 +14,9 @@ import (
 
 func Init(app *echo.Echo, db *sqlx.DB, val *validator.Validate) {
 	var (
-		staffSvc = staffService.New(db)
+		userSvc = userService.New(db)
 	)
 	v1 := app.Group("/v1")
-	staffControllers.Init(v1, val, staffSvc)
+	userController.Init(v1, val, userSvc)
 	v1.GET("/swagger/*", echoSwagger.WrapHandler)
 }

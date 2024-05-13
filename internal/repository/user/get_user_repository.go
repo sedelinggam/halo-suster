@@ -1,4 +1,4 @@
-package staffRepository
+package userRepository
 
 import (
 	"context"
@@ -6,9 +6,9 @@ import (
 	"halo-suster/internal/entity"
 )
 
-func (sr staffRepository) GetStaffByPhoneNumber(ctx context.Context, phoneNumber string) (*entity.Staff, error) {
+func (sr userRepository) GetUserByPhoneNumber(ctx context.Context, phoneNumber string) (*entity.User, error) {
 	var (
-		resp entity.Staff
+		resp entity.User
 		err  error
 	)
 

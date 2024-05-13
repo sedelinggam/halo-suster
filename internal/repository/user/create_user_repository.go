@@ -1,4 +1,4 @@
-package staffRepository
+package userRepository
 
 import (
 	"context"
@@ -6,7 +6,7 @@ import (
 	"halo-suster/internal/entity"
 )
 
-func (sr staffRepository) Create(ctx context.Context, data entity.Staff) error {
+func (sr userRepository) Create(ctx context.Context, data entity.User) error {
 	query := fmt.Sprintf(`INSERT INTO %s(id, phone_number, name, password, created_at) VALUES (:id, :phone_number, :name, :password, :created_at)`, data.TableName())
 
 	tx := sr.db.MustBegin()
