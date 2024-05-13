@@ -1,3 +1,5 @@
+# syntax=docker/dockerfile:1
+
 # build
 FROM golang:1.22.0 as build
 WORKDIR /usr/src/app
