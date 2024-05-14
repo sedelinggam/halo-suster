@@ -26,18 +26,14 @@ func (ss userService) Register(ctx context.Context, requestData request.UserRegi
 	}
 	//Create User
 	userData := entity.User{
-		ID:          uuid.New().String(),
-		PhoneNumber: requestData.PhoneNumber,
-		Name:        requestData.Name,
-		Password:    hashPassword,
-		CreatedAt:   time.Now(),
+		ID:        uuid.New().String(),
+		NIP:       requestData.PhoneNumber,
+		Name:      requestData.Name,
+		Password:  hashPassword,
+		CreatedAt: time.Now(),
 	}
 
-	//Check Phone Number
-	err = userData.CheckPhoneNumber()
-	if err != nil {
-		return nil, lumen.NewError(lumen.ErrBadRequest, err)
-	}
+	//Check NIP
 
 	err = ss.userRepo.Create(ctx, userData)
 	if err != nil {
@@ -49,7 +45,7 @@ func (ss userService) Register(ctx context.Context, requestData request.UserRegi
 	}
 
 	// Create the Claims
-	accessToken, err := cryptoJWT.GenerateToken(userData.ID, userData.PhoneNumber)
+	accessToken, err := cryptoJWT.GenerateToken(userData.ID, userData.NIP, userData.UserRole)
 	if err != nil {
 		return nil, lumen.NewError(lumen.ErrInternalFailure, err)
 	}

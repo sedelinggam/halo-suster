@@ -31,12 +31,12 @@ func (ss userService) Login(ctx context.Context, requestData request.UserLogin) 
 		return nil, lumen.NewError(lumen.ErrBadRequest, errors.New("password doesn't match"))
 	}
 	// Create the Claims
-	accessToken, err := cryptoJWT.GenerateToken(user.ID, user.PhoneNumber)
+	accessToken, err := cryptoJWT.GenerateToken(user.ID, user.NIP, user.UserRole)
 	if err != nil {
 		return nil, lumen.NewError(lumen.ErrInternalFailure, err)
 	}
 	respAccessToken := &response.UserAccessToken{
-		PhoneNumber: user.PhoneNumber,
+		PhoneNumber: user.NIP,
 		Name:        user.Name,
 		AccessToken: *accessToken,
 	}

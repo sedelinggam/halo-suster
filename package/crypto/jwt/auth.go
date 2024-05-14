@@ -17,17 +17,19 @@ const (
 )
 
 type JWTClaims struct {
-	Id          string
-	PhoneNumber string
+	Id       string
+	NIP      string
+	RoleType string
 	jwt.RegisteredClaims
 }
 
-func GenerateToken(id, phoneNumber string) (*string, error) {
+func GenerateToken(id, nip string, roleType string) (*string, error) {
 	secret := config.JWTSecret()
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, JWTClaims{
-		Id:          id,
-		PhoneNumber: phoneNumber,
+		Id:       id,
+		NIP:      nip,
+		RoleType: roleType,
 		RegisteredClaims: jwt.RegisteredClaims{
 			ExpiresAt: jwt.NewNumericDate(time.Now().Add(8 * time.Hour)),
 		},
@@ -38,8 +40,9 @@ func GenerateToken(id, phoneNumber string) (*string, error) {
 }
 
 type JWTPayload struct {
-	Id          string
-	PhoneNumber string
+	Id       string
+	NIP      string
+	RoleType string
 }
 
 func VerifyToken(token string) (*JWTPayload, error) {
@@ -58,8 +61,9 @@ func VerifyToken(token string) (*JWTPayload, error) {
 	}
 
 	payload := &JWTPayload{
-		Id:          claims.Id,
-		PhoneNumber: claims.PhoneNumber,
+		Id:       claims.Id,
+		NIP:      claims.NIP,
+		RoleType: claims.RoleType,
 	}
 
 	return payload, nil
