@@ -7,7 +7,7 @@ CREATE TABLE users (
   identity_card_scan_img VARCHAR,
   role user_role,
   created_at timestamptz NOT NULL,
-  deleted_at timestamptz NOT NULL
+  deleted_at timestamptz NULL
 );
 
 CREATE INDEX user_id ON users (id);

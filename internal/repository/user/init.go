@@ -13,7 +13,9 @@ type userRepository struct {
 
 type UserRepository interface {
 	Create(ctx context.Context, data entity.User) error
-	GetUserByPhoneNumber(ctx context.Context, phoneNumber string) (*entity.User, error)
+	GetUserByNIPWithRole(ctx context.Context, nip string, role string) (*entity.User, error)
+	UpdateDeletedAt(ctx context.Context, data entity.User) error
+	UpdatePassword(ctx context.Context, data entity.User) error
 }
 
 func New(db *sqlx.DB) UserRepository {

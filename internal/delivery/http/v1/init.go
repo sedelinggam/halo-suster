@@ -22,5 +22,6 @@ func Init(app *echo.Echo, db *sqlx.DB, val *validator.Validate) {
 	jwt := echojwt.WithConfig(cryptoJWT.JWTConfig())
 
 	v1 := app.Group("/v1")
+
 	userController.Init(v1, val, userSvc, jwt)
 }

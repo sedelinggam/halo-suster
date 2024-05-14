@@ -8,6 +8,7 @@ import (
 	"halo-suster/package/crypto/bcrypt"
 	cryptoJWT "halo-suster/package/crypto/jwt"
 	"halo-suster/package/lumen"
+	"strconv"
 	"time"
 
 	"github.com/google/uuid"
@@ -27,7 +28,7 @@ func (ss userService) Register(ctx context.Context, requestData request.UserRegi
 	//Create User
 	userData := entity.User{
 		ID:        uuid.New().String(),
-		NIP:       requestData.PhoneNumber,
+		NIP:       strconv.Itoa(requestData.NIP),
 		Name:      requestData.Name,
 		Password:  hashPassword,
 		CreatedAt: time.Now(),
@@ -53,7 +54,7 @@ func (ss userService) Register(ctx context.Context, requestData request.UserRegi
 	//Cache The token
 	respAccessToken := &response.UserAccessToken{
 		UserID:      userData.ID,
-		PhoneNumber: requestData.PhoneNumber,
+		NIP:         requestData.NIP,
 		Name:        requestData.Name,
 		AccessToken: *accessToken,
 	}

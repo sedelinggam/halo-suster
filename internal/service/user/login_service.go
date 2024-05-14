@@ -8,6 +8,7 @@ import (
 	"halo-suster/package/crypto/bcrypt"
 	cryptoJWT "halo-suster/package/crypto/jwt"
 	"halo-suster/package/lumen"
+	"strconv"
 )
 
 func (ss userService) Login(ctx context.Context, requestData request.UserLogin) (*response.UserAccessToken, error) {
@@ -17,7 +18,7 @@ func (ss userService) Login(ctx context.Context, requestData request.UserLogin) 
 	)
 
 	// Find the user by credentials
-	user, err := ss.userRepo.GetUserByPhoneNumber(ctx, requestData.PhoneNumber)
+	user, err := ss.userRepo.GetUserByNIPWithRole(ctx, strconv.Itoa(requestData.NIP), requestData.RoleType)
 	if err != nil {
 		//Duplicate unique key
 		if lumen.CheckErrorSQLNotFound(err) {
@@ -36,7 +37,7 @@ func (ss userService) Login(ctx context.Context, requestData request.UserLogin) 
 		return nil, lumen.NewError(lumen.ErrInternalFailure, err)
 	}
 	respAccessToken := &response.UserAccessToken{
-		PhoneNumber: user.NIP,
+		NIP:         requestData.NIP,
 		Name:        user.Name,
 		AccessToken: *accessToken,
 	}
