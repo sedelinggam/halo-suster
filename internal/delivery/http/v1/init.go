@@ -1,6 +1,7 @@
 package v1
 
 import (
+	imageController "halo-suster/internal/delivery/http/v1/controller/image"
 	userController "halo-suster/internal/delivery/http/v1/controller/user"
 	userService "halo-suster/internal/service/user"
 
@@ -18,5 +19,6 @@ func Init(app *echo.Echo, db *sqlx.DB, val *validator.Validate) {
 	)
 	v1 := app.Group("/v1")
 	userController.Init(v1, val, userSvc)
+	imageController.Init(v1, val)
 	v1.GET("/swagger/*", echoSwagger.WrapHandler)
 }
