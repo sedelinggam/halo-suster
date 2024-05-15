@@ -7,8 +7,7 @@ import (
 )
 
 func (sr userRepository) Create(ctx context.Context, data entity.User) error {
-	query := fmt.Sprintf(`INSERT INTO %s(id, phone_number, name, password, created_at) VALUES (:id, :phone_number, :name, :password, :created_at)`, data.TableName())
-
+	query := fmt.Sprintf(`INSERT INTO %s(id, nip, name, password, created_at, role) VALUES (:id, :nip, :name, :password, :created_at, :role)`, data.TableName())
 	tx := sr.db.MustBegin()
 	_, err := tx.NamedExecContext(ctx, query, data)
 	tx.Commit()

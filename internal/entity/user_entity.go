@@ -1,34 +1,52 @@
 package entity
 
 import (
-	"errors"
-	"halo-suster/package/lumen"
-	"strings"
+	"fmt"
+	valueobject "halo-suster/internal/value_object"
+	"strconv"
 	"time"
+
+	"github.com/lib/pq"
 )
 
 type User struct {
-	ID          string    `db:"id"`
-	PhoneNumber string    `db:"phone_number"`
-	Name        string    `db:"name"`
-	Password    string    `db:"password"`
-	CreatedAt   time.Time `db:"created_at"`
+	ID                    string      `db:"id"`
+	NIP                   string      `db:"nip"`
+	Name                  string      `db:"name"`
+	Password              string      `db:"password"`
+	UserRole              string      `db:"role"`
+	IdentityCardScanImage *string     `db:"identity_card_scan_img"`
+	CreatedAt             time.Time   `db:"created_at"`
+	DeletedAt             pq.NullTime `db:"deleted_at"`
 }
 
 func (s User) TableName() string {
 	return `users`
 }
 
-func (s User) CheckPhoneNumber() error {
-	if len(s.PhoneNumber) == 0 {
-		return lumen.NewError(lumen.ErrBadRequest, errors.New("phone number not valid"))
-	}
-	if !strings.HasPrefix(s.PhoneNumber, "+") {
-		return lumen.NewError(lumen.ErrBadRequest, errors.New("phone number not valid"))
-	}
-	return nil
-}
+func (s User) CheckNIP(login bool) bool {
+	//Change string to INT
 
-func (s *User) NewPassword(password string) error {
-	return nil
+	year, _ := strconv.Atoi(s.NIP[4:8])
+	month, _ := strconv.Atoi(s.NIP[9:10])
+	randDigit, _ := strconv.Atoi(s.NIP[11:13])
+	//Check if NIP length is 13
+	if len(s.NIP) != 13 {
+		return false
+	} else if s.UserRole == valueobject.USER_ROLE_NURSE && s.NIP[0:3] != "303" && !login {
+		return false
+	} else if s.UserRole == valueobject.USER_ROLE_IT && s.NIP[0:3] != "615" && !login {
+		return false
+	} else if s.NIP[3:4] != "1" && s.NIP[3:4] != "2" {
+		return false
+	} else if year < 2000 || year > time.Now().Year() {
+		return false
+	} else if month < 1 || month > 12 {
+		fmt.Println("F", month)
+		return false
+	} else if randDigit < 1 || randDigit > 999 {
+		fmt.Println("G", randDigit)
+		return false
+	}
+	return true
 }
