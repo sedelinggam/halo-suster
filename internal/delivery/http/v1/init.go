@@ -1,6 +1,7 @@
 package v1
 
 import (
+	imageController "halo-suster/internal/delivery/http/v1/controller/image"
 	userController "halo-suster/internal/delivery/http/v1/controller/user"
 	userService "halo-suster/internal/service/user"
 	cryptoJWT "halo-suster/package/crypto/jwt"
@@ -22,6 +23,9 @@ func Init(app *echo.Echo, db *sqlx.DB, val *validator.Validate) {
 	jwt := echojwt.WithConfig(cryptoJWT.JWTConfig())
 
 	v1 := app.Group("/v1")
+	imageController.Init(v1, val)
+
+	//TODO: swagger docs
 
 	userController.Init(v1, val, userSvc, jwt)
 }
