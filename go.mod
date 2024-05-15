@@ -15,7 +15,8 @@ require (
 	github.com/joho/godotenv v1.5.1
 	github.com/labstack/echo-jwt/v4 v4.2.0
 	github.com/labstack/echo/v4 v4.12.0
-	github.com/swaggo/echo-swagger v1.4.1
+	github.com/lib/pq v1.10.9
+	github.com/oklog/ulid/v2 v2.1.0
 	github.com/swaggo/swag v1.8.12
 	go.uber.org/zap v1.27.0
 	golang.org/x/crypto v0.22.0
@@ -40,7 +41,6 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/sts v1.28.7 // indirect
 	github.com/aws/smithy-go v1.20.2 // indirect
 	github.com/gabriel-vasile/mimetype v1.4.3 // indirect
-	github.com/ghodss/yaml v1.0.0 // indirect
 	github.com/go-openapi/jsonpointer v0.19.5 // indirect
 	github.com/go-openapi/jsonreference v0.19.6 // indirect
 	github.com/go-openapi/spec v0.20.4 // indirect
@@ -61,9 +61,7 @@ require (
 	github.com/mailru/easyjson v0.7.7 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
-	github.com/oklog/ulid/v2 v2.1.0 // indirect
 	github.com/stretchr/testify v1.9.0 // indirect
-	github.com/swaggo/files/v2 v2.0.0 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasttemplate v1.2.2 // indirect
 	go.uber.org/multierr v1.10.0 // indirect
