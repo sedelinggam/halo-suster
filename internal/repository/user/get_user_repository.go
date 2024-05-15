@@ -24,39 +24,11 @@ func (pr userRepository) GetUsers(ctx context.Context, req request.UserParam) ([
 		conditions = append(conditions, fmt.Sprintf("name ILIKE '%%' || $%d || '%%'", len(filter)))
 	}
 
-	if req.Category != nil {
-		filter = append(filter, req.Category)
-		conditions = append(conditions, fmt.Sprintf("category = $%d", len(filter)))
-	}
-
-	if req.Sku != nil {
-		filter = append(filter, req.Sku)
-		conditions = append(conditions, fmt.Sprintf("sku = $%d", len(filter)))
-	}
-
-	if req.InStock != nil {
-		if *req.InStock {
-			conditions = append(conditions, "stock > 0")
-		} else {
-			conditions = append(conditions, "stock = 0")
-		}
-	}
-
 	if len(conditions) > 0 {
 		query += fmt.Sprintf(" WHERE %s", strings.Join(conditions, " AND "))
 		query += " AND is_available = true AND deleted_at IS NULL"
 	} else {
 		query += " WHERE is_available = true AND deleted_at IS NULL"
-	}
-
-	if req.Price != nil && req.CreatedAt != nil {
-		query += fmt.Sprintf(" ORDER BY price %s, created_at %s", *req.Price, *req.CreatedAt)
-	} else if req.Price != nil {
-		query += fmt.Sprintf(" ORDER BY price %s", *req.Price)
-	} else if req.CreatedAt != nil {
-		query += fmt.Sprintf(" ORDER BY created_at %s", *req.CreatedAt)
-	} else {
-		query += " ORDER BY created_at DESC"
 	}
 
 	filter = append(filter, req.Limit)
@@ -70,5 +42,5 @@ func (pr userRepository) GetUsers(ctx context.Context, req request.UserParam) ([
 		return nil, err
 	}
 
-	return &resp, nil
+	return resp, nil
 }

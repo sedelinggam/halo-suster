@@ -15,7 +15,9 @@ type userService struct {
 
 type UserService interface {
 	Login(ctx context.Context, requestData request.UserLogin) (*response.UserAccessToken, error)
-	Register(ctx context.Context, requestData request.UserRegister) (*response.UserAccessToken, error)
+	RegisterUserIT(ctx context.Context, requestData request.ITUserRegister) (*response.UserAccessToken, error)
+	RegisterUserNurse(ctx context.Context, requestData request.NurseUserRegister) (*response.UserAccessToken, error)
+	DeleteUserNurse(ctx context.Context, nip int) (*response.UserNurse, error)
 }
 
 func New(db *sqlx.DB) UserService {

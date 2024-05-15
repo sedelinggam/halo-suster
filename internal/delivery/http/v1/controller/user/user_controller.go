@@ -24,7 +24,7 @@ func Init(group *echo.Group, val *validator.Validate, userSvc userService.UserSe
 	//Private
 	itRouterPrivate := user
 	itRouterPrivate.Use(jwt)
-	itRouterPrivate.POST("/nurse/register", handler.NurseLogin)
+	itRouterPrivate.POST("/nurse/register", handler.NurseRegister)
 	itRouterPrivate.GET("", handler.User)
 	itRouterPrivate.PUT("/nurse/:userId", handler.NurseUpdate)
 	itRouterPrivate.DELETE("/nurse/:userId", handler.NurseDelete)

@@ -6,3 +6,8 @@ type UserAccessToken struct {
 	Name        string `json:"name"`
 	AccessToken string `json:"accessToken"`
 }
+
+type UserNurse struct {
+	NIP  int    `json:"nip"`
+	Name string `json:"name,omitempty"`
+}

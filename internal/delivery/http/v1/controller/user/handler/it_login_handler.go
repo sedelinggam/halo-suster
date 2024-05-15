@@ -28,6 +28,9 @@ func (uh userHandler) ITLogin(c echo.Context) error {
 		return lumen.FromError(lumen.NewError(lumen.ErrBadRequest, err)).SendResponse(c)
 	}
 
+	//Role type IT
+	req.RoleType = "it"
+
 	resp, err = uh.userService.Login(c.Request().Context(), req)
 	if err != nil {
 		return lumen.FromError(err).SendResponse(c)

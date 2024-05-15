@@ -1,6 +1,7 @@
 package userHandler
 
 import (
+	"fmt"
 	"halo-suster/internal/delivery/http/v1/request"
 	"halo-suster/internal/delivery/http/v1/response"
 	"halo-suster/package/lumen"
@@ -11,7 +12,7 @@ import (
 
 func (uh userHandler) ITRegister(c echo.Context) error {
 	var (
-		req  request.UserRegister
+		req  request.ITUserRegister
 		resp *response.UserAccessToken
 		err  error
 	)
@@ -22,6 +23,7 @@ func (uh userHandler) ITRegister(c echo.Context) error {
 	}
 
 	// Validate the User struct
+	fmt.Println(req.NIP, ":Z")
 	err = uh.val.Struct(req)
 	if err != nil {
 		// Validation failed, handle the error
@@ -29,7 +31,7 @@ func (uh userHandler) ITRegister(c echo.Context) error {
 
 	}
 
-	resp, err = uh.userService.Register(c.Request().Context(), req)
+	resp, err = uh.userService.RegisterUserIT(c.Request().Context(), req)
 	if err != nil {
 		return lumen.FromError(err).SendResponse(c)
 	}

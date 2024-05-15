@@ -1,13 +1,23 @@
 package request
 
-type UserRegister struct {
-	NIP      int    `json:"nip" validate:"required,min=10,max=16"`
+type ITUserRegister struct {
+	NIP      int    `json:"nip" validate:"required"`
 	Name     string `json:"name" validate:"required,min=5,max=50"`
 	Password string `json:"password" validate:"required,min=5,max=15"`
 }
 
+type NurseUserRegister struct {
+	NIP                   int    `json:"nip" validate:"required"`
+	Name                  string `json:"name" validate:"required,min=5,max=50"`
+	IdentityCardScanImage string `json:"identityCardScanImg" validate:"required,min=5,max=15"`
+}
+
+type NurseUserPassword struct {
+	Password string `json:"password" validate:"required,min=5,max=15"`
+}
+
 type UserLogin struct {
-	NIP      int    `json:"nip" validate:"required,min=10,max=16"`
+	NIP      int    `json:"nip" validate:"required"`
 	Password string `json:"password" validate:"required,min=5,max=15"`
 	RoleType string
 }
