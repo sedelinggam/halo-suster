@@ -9,9 +9,9 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func (uh userHandler) Register(c echo.Context) error {
+func (uh userHandler) ITRegister(c echo.Context) error {
 	var (
-		req  request.UserRegister
+		req  request.ITUserRegister
 		resp *response.UserAccessToken
 		err  error
 	)
@@ -29,7 +29,7 @@ func (uh userHandler) Register(c echo.Context) error {
 
 	}
 
-	resp, err = uh.userService.Register(c.Request().Context(), req)
+	resp, err = uh.userService.RegisterUserIT(c.Request().Context(), req)
 	if err != nil {
 		return lumen.FromError(err).SendResponse(c)
 	}
