@@ -37,7 +37,7 @@ func (s User) CheckNIP(login bool) bool {
 		return false
 	} else if s.UserRole == valueobject.USER_ROLE_IT && s.NIP[0:3] != "615" && !login {
 		return false
-	} else if s.NIP[4:5] != "1" && s.NIP[3:4] != "2" {
+	} else if s.NIP[3:4] != "1" && s.NIP[3:4] != "2" {
 		return false
 	} else if year < 2000 || year > time.Now().Year() {
 		return false

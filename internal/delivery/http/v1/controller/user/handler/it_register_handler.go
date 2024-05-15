@@ -1,7 +1,6 @@
 package userHandler
 
 import (
-	"fmt"
 	"halo-suster/internal/delivery/http/v1/request"
 	"halo-suster/internal/delivery/http/v1/response"
 	"halo-suster/package/lumen"
@@ -23,7 +22,6 @@ func (uh userHandler) ITRegister(c echo.Context) error {
 	}
 
 	// Validate the User struct
-	fmt.Println(req.NIP, ":Z")
 	err = uh.val.Struct(req)
 	if err != nil {
 		// Validation failed, handle the error
