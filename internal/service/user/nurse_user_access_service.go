@@ -3,14 +3,13 @@ package userService
 import (
 	"context"
 	"errors"
-	"fmt"
 	"halo-suster/internal/delivery/http/v1/response"
 	"halo-suster/internal/entity"
 	"halo-suster/package/crypto/bcrypt"
 	"halo-suster/package/lumen"
 )
 
-func (ss userService) AccessUserNurse(ctx context.Context, requestData int, password string) (*response.UserNurse, error) {
+func (ss userService) AccessUserNurse(ctx context.Context, requestData string, password string) (*response.UserNurse, error) {
 
 	//Password Hash
 	hashPassword, err := bcrypt.HashPassword(password)
@@ -19,7 +18,7 @@ func (ss userService) AccessUserNurse(ctx context.Context, requestData int, pass
 	}
 
 	userData := entity.User{
-		ID:       fmt.Sprintf("%d", requestData),
+		ID:       requestData,
 		Password: hashPassword,
 	}
 	//Check NIP
@@ -33,6 +32,6 @@ func (ss userService) AccessUserNurse(ctx context.Context, requestData int, pass
 	}
 
 	return &response.UserNurse{
-		NIP: requestData,
+		UserID: requestData,
 	}, nil
 }

@@ -2,7 +2,6 @@ package userService
 
 import (
 	"context"
-	"fmt"
 	"halo-suster/internal/delivery/http/v1/response"
 	"halo-suster/internal/entity"
 	"halo-suster/package/lumen"
@@ -11,10 +10,10 @@ import (
 	"github.com/lib/pq"
 )
 
-func (ss userService) DeleteUserNurse(ctx context.Context, requestData int) (*response.UserNurse, error) {
+func (ss userService) DeleteUserNurse(ctx context.Context, requestData string) (*response.UserNurse, error) {
 
 	err := ss.userRepo.UpdateDeletedAt(ctx, entity.User{
-		ID: fmt.Sprintf("%d", requestData),
+		ID: requestData,
 		DeletedAt: pq.NullTime{
 			Time:  time.Now(),
 			Valid: false,
@@ -25,6 +24,6 @@ func (ss userService) DeleteUserNurse(ctx context.Context, requestData int) (*re
 	}
 
 	return &response.UserNurse{
-		NIP: requestData,
+		UserID: requestData,
 	}, nil
 }

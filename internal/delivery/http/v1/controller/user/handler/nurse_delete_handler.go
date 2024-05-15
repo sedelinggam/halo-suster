@@ -6,7 +6,6 @@ import (
 	cryptoJWT "halo-suster/package/crypto/jwt"
 	"halo-suster/package/lumen"
 	"net/http"
-	"strconv"
 
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/labstack/echo/v4"
@@ -14,17 +13,13 @@ import (
 
 func (uh userHandler) NurseDelete(c echo.Context) error {
 	var (
-		resp *response.UserNurse
-		nip  int
-		err  error
+		resp    *response.UserNurse
+		nurseId string
+		err     error
 	)
 
 	if id := c.Param("nurseId"); id != "" {
-		err := uh.val.Var(c.Param("nurseId"), "int")
-		if err != nil {
-			return lumen.FromError(lumen.NewError(lumen.ErrNotFound, err)).SendResponse(c)
-		}
-		nip, _ = strconv.Atoi(id)
+		nurseId = id
 	}
 
 	//Get jwt user ID
@@ -34,7 +29,7 @@ func (uh userHandler) NurseDelete(c echo.Context) error {
 		return lumen.FromError(lumen.NewError(lumen.ErrUnauthorized, errors.New("wrong user role"))).SendResponse(c)
 	}
 
-	resp, err = uh.userService.DeleteUserNurse(c.Request().Context(), nip)
+	resp, err = uh.userService.DeleteUserNurse(c.Request().Context(), nurseId)
 	if err != nil {
 		return lumen.FromError(err).SendResponse(c)
 	}

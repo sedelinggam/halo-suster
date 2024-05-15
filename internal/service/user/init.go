@@ -17,8 +17,10 @@ type UserService interface {
 	Login(ctx context.Context, requestData request.UserLogin) (*response.UserAccessToken, error)
 	RegisterUserIT(ctx context.Context, requestData request.ITUserRegister) (*response.UserAccessToken, error)
 	RegisterUserNurse(ctx context.Context, requestData request.NurseUserRegister) (*response.UserAccessToken, error)
-	DeleteUserNurse(ctx context.Context, nip int) (*response.UserNurse, error)
-	AccessUserNurse(ctx context.Context, requestData int, password string) (*response.UserNurse, error)
+	DeleteUserNurse(ctx context.Context, nip string) (*response.UserNurse, error)
+	AccessUserNurse(ctx context.Context, requestData string, password string) (*response.UserNurse, error)
+	UpdateUserNurse(ctx context.Context, nip int, name string, userId string) (*response.UserNurse, error)
+	GetUsers(ctx context.Context, req request.UserParam) ([]*response.UserNurse, error)
 }
 
 func New(db *sqlx.DB) UserService {

@@ -12,6 +12,11 @@ type NurseUserRegister struct {
 	IdentityCardScanImage string `json:"identityCardScanImg" validate:"required,min=5,max=15"`
 }
 
+type NurseUserUpdate struct {
+	NIP  int    `json:"nip" validate:"required"`
+	Name string `json:"name" validate:"required,min=5,max=50"`
+}
+
 type NurseUserPassword struct {
 	Password string `json:"password" validate:"required,min=5,max=15"`
 }
@@ -24,8 +29,8 @@ type UserLogin struct {
 
 type UserParam struct {
 	UserID    *string
-	Limit     *int
-	Offset    *int
+	Limit     int
+	Offset    int
 	Name      *string
 	Nip       *string
 	Role      *string

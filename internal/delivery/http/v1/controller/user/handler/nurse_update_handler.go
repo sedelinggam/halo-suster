@@ -12,22 +12,27 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func (uh userHandler) NursePassword(c echo.Context) error {
+func (uh userHandler) NurseUpdate(c echo.Context) error {
 	var (
-		req    request.NurseUserPassword
+		req    request.NurseUserUpdate
 		resp   *response.UserNurse
 		userId string
 		err    error
 	)
-
 	if id := c.Param("nurseId"); id != "" {
 		userId = id
 	}
-
 	err = c.Bind(&req)
 	if err != nil {
 		return lumen.FromError(lumen.NewError(lumen.ErrBadRequest, err)).SendResponse(c)
 
+	}
+
+	//Get jwt user ID
+	user := c.Get("user").(*jwt.Token)
+	claims := user.Claims.(*cryptoJWT.JWTClaims)
+	if claims.RoleType != "it" {
+		return lumen.FromError(lumen.NewError(lumen.ErrUnauthorized, errors.New("wrong user role"))).SendResponse(c)
 	}
 
 	// Validate the User struct
@@ -38,23 +43,13 @@ func (uh userHandler) NursePassword(c echo.Context) error {
 
 	}
 
-	if id := c.Param("nurseId"); id != "" {
-		userId = id
-	}
-
-	//Get jwt user ID
-	user := c.Get("user").(*jwt.Token)
-	claims := user.Claims.(*cryptoJWT.JWTClaims)
-	if claims.RoleType != "it" {
-		return lumen.FromError(lumen.NewError(lumen.ErrUnauthorized, errors.New("wrong user role"))).SendResponse(c)
-	}
-
-	resp, err = uh.userService.AccessUserNurse(c.Request().Context(), userId, req.Password)
+	resp, err = uh.userService.UpdateUserNurse(c.Request().Context(), req.NIP, req.Name, userId)
 	if err != nil {
 		return lumen.FromError(err).SendResponse(c)
 	}
 
 	return c.JSON(http.StatusOK, response.Common{
-		Data: resp,
+		Message: "User updated successfully",
+		Data:    resp,
 	})
 }
