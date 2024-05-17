@@ -1,7 +1,6 @@
 package entity
 
 import (
-	"fmt"
 	valueobject "halo-suster/internal/value_object"
 	"strconv"
 	"time"
@@ -29,7 +28,7 @@ func (s User) CheckNIP(login bool) bool {
 
 	year, _ := strconv.Atoi(s.NIP[4:8])
 	month, _ := strconv.Atoi(s.NIP[9:10])
-	randDigit, _ := strconv.Atoi(s.NIP[11:13])
+	randDigit, _ := strconv.Atoi(s.NIP[11:15])
 	//Check if NIP length is 13
 	if len(s.NIP) != 13 {
 		return false
@@ -42,10 +41,8 @@ func (s User) CheckNIP(login bool) bool {
 	} else if year < 2000 || year > time.Now().Year() {
 		return false
 	} else if month < 1 || month > 12 {
-		fmt.Println("F", month)
 		return false
-	} else if randDigit < 1 || randDigit > 999 {
-		fmt.Println("G", randDigit)
+	} else if randDigit < 1 || randDigit > 99999 {
 		return false
 	}
 	return true
