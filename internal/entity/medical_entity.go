@@ -25,3 +25,14 @@ func (m MedicalRecord) CheckIdentityNumber() error {
 	}
 	return nil
 }
+
+type MedicalRecords struct {
+	MedicalRecord
+	PhoneNumber         string    `db:"phone_number"`
+	PatientName         string    `db:"patient_name"`
+	BirthDate           time.Time `db:"birth_date"`
+	Gender              string    `db:"gender"`
+	IdentityCardScanImg string    `db:"identity_card_scan_url"`
+	UserNIP             string    `db:"nip"`
+	UserName            string    `db:"user_name"`
+}
