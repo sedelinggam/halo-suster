@@ -25,3 +25,12 @@ type CreatePatient struct {
 	// not null, should be an image url
 	IdentityCardScanImg string `json:"identityCardScanImg" validate:"required,url"`
 }
+
+type PatientParam struct {
+	IdentityNumber *string
+	Limit          int
+	Offset         int
+	Name           *string
+	PhoneNumber    *string
+	CreatedAt      *string
+}
