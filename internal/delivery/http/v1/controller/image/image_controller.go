@@ -7,11 +7,12 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func Init(group *echo.Group, val *validator.Validate) {
+func Init(group *echo.Group, val *validator.Validate, jwt echo.MiddlewareFunc) {
 	image := group.Group("/image")
 	handler := imageHandler.NewHandler(val)
 
-	publicRoute := image
+	privateRoute := image
+	privateRoute.Use(jwt)
 	// TODO: Add middleware
-	publicRoute.POST("", handler.StoreImage)
+	privateRoute.POST("", handler.StoreImage)
 }
