@@ -2,7 +2,6 @@ package userService
 
 import (
 	"context"
-	"errors"
 	"halo-suster/internal/delivery/http/v1/response"
 	"halo-suster/internal/entity"
 	"halo-suster/package/crypto/bcrypt"
@@ -22,9 +21,9 @@ func (ss userService) AccessUserNurse(ctx context.Context, requestData string, p
 		Password: hashPassword,
 	}
 	//Check NIP
-	if validNIP := userData.CheckNIP(false); !validNIP {
-		return nil, lumen.NewError(lumen.ErrBadRequest, errors.New("NIP not valid"))
-	}
+	// if validNIP := userData.CheckNIP(false); !validNIP {
+	// 	return nil, lumen.NewError(lumen.ErrBadRequest, errors.New("NIP not valid"))
+	// }
 
 	err = ss.userRepo.UpdatePassword(ctx, userData)
 	if err != nil {
