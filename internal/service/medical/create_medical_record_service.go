@@ -5,7 +5,9 @@ import (
 	"halo-suster/internal/delivery/http/v1/request"
 	"halo-suster/internal/delivery/http/v1/response"
 	"halo-suster/internal/entity"
+	cryptoJWT "halo-suster/package/crypto/jwt"
 	"halo-suster/package/lumen"
+	"strconv"
 	"time"
 
 	"github.com/oklog/ulid/v2"
@@ -16,7 +18,8 @@ func (ms medicalService) CreateMedicalRecord(ctx context.Context, requestData re
 		err error
 	)
 
-	_, err = ms.medicalRepo.GetPatient(ctx, requestData.IdentityNumber)
+	idNumber := strconv.FormatInt(requestData.IdentityNumber, 10)
+	_, err = ms.patientRepo.GetPatient(ctx, idNumber)
 
 	if err != nil {
 		if lumen.CheckErrorSQLNotFound(err) {
@@ -25,15 +28,15 @@ func (ms medicalService) CreateMedicalRecord(ctx context.Context, requestData re
 		return nil, lumen.NewError(lumen.ErrInternalFailure, err)
 	}
 
-	currentUser := ctx.Value("currentUser").(entity.User)
+	currentUser := ctx.Value("currentUser").(*cryptoJWT.JWTClaims)
 
 	newMedicalRecord := entity.MedicalRecord{
 		ID:             ulid.Make().String(),
 		CreatedAt:      time.Now(),
 		Symptoms:       requestData.Symptoms,
 		Medications:    requestData.Medications,
-		IdentityNumber: requestData.IdentityNumber,
-		UserID:         currentUser.ID,
+		IdentityNumber: idNumber,
+		UserID:         currentUser.Id,
 	}
 
 	err = ms.medicalRepo.CreateMedicalRecord(ctx, newMedicalRecord)

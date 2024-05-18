@@ -1,19 +1,10 @@
 package entity
 
 import (
+	"errors"
+	"halo-suster/package/lumen"
 	"time"
 )
-
-type Patient struct {
-	ID                    string    `db:"id"`
-	IdentityNumber        string    `db:"identity_number"`
-	Name                  string    `db:"name"`
-	PhoneNumber           string    `db:"phone_number"`
-	BirthDate             string    `db:"birth_date"`
-	Gender                *string   `db:"gender"`
-	IdentityCardScanImage string    `db:"identity_card_scan_img"`
-	CreatedAt             time.Time `db:"created_at"`
-}
 
 type MedicalRecord struct {
 	ID             string    `db:"id"`
@@ -26,4 +17,11 @@ type MedicalRecord struct {
 
 func (m MedicalRecord) TableName() string {
 	return `medical_records`
+}
+
+func (m MedicalRecord) CheckIdentityNumber() error {
+	if len(m.IdentityNumber) != 16 {
+		return lumen.NewError(lumen.ErrBadRequest, errors.New("identity number not valid"))
+	}
+	return nil
 }

@@ -4,23 +4,24 @@ import (
 	"context"
 	"halo-suster/internal/delivery/http/v1/request"
 	"halo-suster/internal/delivery/http/v1/response"
-	"halo-suster/internal/entity"
 	medicalRepository "halo-suster/internal/repository/medical"
+	patientRepository "halo-suster/internal/repository/patient"
 
 	"github.com/jmoiron/sqlx"
 )
 
 type medicalService struct {
 	medicalRepo medicalRepository.MedicalRepository
+	patientRepo patientRepository.PatientRepository
 }
 
 type MedicalService interface {
-	GetPatient(ctx context.Context, identityNumber string) (*entity.Patient, error)
 	CreateMedicalRecord(ctx context.Context, requestData request.CreateMedicalRecord) (*response.CreateMedicalRecord, error)
 }
 
 func New(db *sqlx.DB) MedicalService {
 	return &medicalService{
+		patientRepo: patientRepository.New(db),
 		medicalRepo: medicalRepository.New(db),
 	}
 }

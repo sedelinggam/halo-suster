@@ -9,11 +9,11 @@ import (
 )
 
 func Init(group *echo.Group, val *validator.Validate, medicalSvc medicalService.MedicalService, jwt echo.MiddlewareFunc) {
-	medical := group.Group("/medical")
+	medical := group.Group("/medical/record")
 	handler := medicalHandler.NewHandler(medicalSvc, val)
 
 	//Private
 	itRouterPrivate := medical
 	itRouterPrivate.Use(jwt)
-	itRouterPrivate.POST("/record", handler.CreateMedicalRecord)
+	itRouterPrivate.POST("", handler.CreateMedicalRecord)
 }

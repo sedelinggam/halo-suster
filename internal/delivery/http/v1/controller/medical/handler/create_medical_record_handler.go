@@ -1,11 +1,14 @@
 package medicalHandler
 
 import (
+	"context"
 	"halo-suster/internal/delivery/http/v1/request"
 	"halo-suster/internal/delivery/http/v1/response"
+	cryptoJWT "halo-suster/package/crypto/jwt"
 	"halo-suster/package/lumen"
 	"net/http"
 
+	"github.com/golang-jwt/jwt/v5"
 	"github.com/labstack/echo/v4"
 )
 
@@ -27,7 +30,11 @@ func (mh medicalHandler) CreateMedicalRecord(c echo.Context) error {
 
 	}
 
-	resp, err = mh.medicalService.CreateMedicalRecord(c.Request().Context(), req)
+	user := c.Get("user").(*jwt.Token)
+	claims := user.Claims.(*cryptoJWT.JWTClaims)
+	ctx := context.WithValue(c.Request().Context(), "currentUser", claims)
+
+	resp, err = mh.medicalService.CreateMedicalRecord(ctx, req)
 	if err != nil {
 		return lumen.FromError(err).SendResponse(c)
 	}

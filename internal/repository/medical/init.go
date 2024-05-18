@@ -12,7 +12,6 @@ type medicalRepository struct {
 }
 
 type MedicalRepository interface {
-	GetPatient(ctx context.Context, identityNumber string) (*entity.Patient, error)
 	CreateMedicalRecord(ctx context.Context, data entity.MedicalRecord) error
 }
 

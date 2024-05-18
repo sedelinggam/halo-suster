@@ -1,4 +1,4 @@
-package medicalService
+package patientService
 
 import (
 	"context"
@@ -6,12 +6,12 @@ import (
 	"halo-suster/package/lumen"
 )
 
-func (ms medicalService) GetPatient(ctx context.Context, identityNumber string) (*entity.Patient, error) {
+func (ps patientService) GetPatient(ctx context.Context, identityNumber string) (*entity.Patient, error) {
 	var (
 		err error
 	)
 
-	data, err := ms.medicalRepo.GetPatient(ctx, identityNumber)
+	data, err := ps.patientRepo.GetPatient(ctx, identityNumber)
 
 	if err != nil {
 		if lumen.CheckErrorSQLUnique(err) {
