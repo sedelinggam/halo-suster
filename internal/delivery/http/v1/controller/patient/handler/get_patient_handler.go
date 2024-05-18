@@ -3,6 +3,7 @@ package patientHandler
 import (
 	"halo-suster/internal/delivery/http/v1/request"
 	"halo-suster/internal/delivery/http/v1/response"
+	"halo-suster/package/lumen"
 	"net/http"
 	"strconv"
 
@@ -12,15 +13,16 @@ import (
 func (ph patientHandler) GetPatient(c echo.Context) error {
 
 	var (
-		req  request.UserParam
-		resp []*response.UserNurse
+		req  request.PatientParam
+		resp []*response.Patient
+		err  error
 	)
 	queries := c.QueryParams()
 	//Filter
 
-	if userId := queries.Get("userId"); userId != "" {
-		userId := queries.Get("userId")
-		req.UserID = &userId
+	if identityNumber := queries.Get("identityNumber"); identityNumber != "" {
+		identityNumber := queries.Get("identityNumber")
+		req.IdentityNumber = &identityNumber
 	}
 
 	if name := queries.Get("name"); name != "" {
@@ -28,16 +30,10 @@ func (ph patientHandler) GetPatient(c echo.Context) error {
 		req.Name = &name
 	}
 
-	if nip := queries.Get("nip"); nip != "" {
-		nip := queries.Get("nip")
-		req.Nip = &nip
-	}
-
-	if role := queries.Get("role"); role != "" {
-		err := ph.val.Var(queries.Get("role"), "oneof=it nurse")
-		if err == nil {
-			req.Role = &role
-		}
+	if phoneNumber := queries.Get("phoneNumber"); phoneNumber != "" {
+		phoneNumber := queries.Get("phoneNumber")
+		phoneNumber = "+" + phoneNumber
+		req.PhoneNumber = &phoneNumber
 	}
 
 	if createdAt := queries.Get("createdAt"); createdAt != "" {
@@ -66,6 +62,11 @@ func (ph patientHandler) GetPatient(c echo.Context) error {
 	} else {
 		req.Offset = 0
 	}
+	resp, err = ph.patientService.GetPatients(c.Request().Context(), req)
+	if err != nil {
+		return lumen.FromError(err).SendResponse(c)
+	}
+
 	//Get jwt user ID
 	return c.JSON(http.StatusOK, response.Common{
 		Message: "User updated successfully",
