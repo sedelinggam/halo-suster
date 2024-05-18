@@ -45,6 +45,7 @@ func (s *Server) Run() error {
 			return nil
 		},
 	}))
+
 	//Setup Router
 	v1.Init(s.app, s.db, s.validator)
 

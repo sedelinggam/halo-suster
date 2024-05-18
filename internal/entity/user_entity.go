@@ -1,6 +1,7 @@
 package entity
 
 import (
+	"fmt"
 	valueobject "halo-suster/internal/value_object"
 	"strconv"
 	"time"
@@ -26,9 +27,11 @@ func (s User) TableName() string {
 func (s User) CheckNIP(login bool) bool {
 	//Change string to INT
 
+	fmt.Println("NIP: ", s.NIP)
+
 	year, _ := strconv.Atoi(s.NIP[4:8])
 	month, _ := strconv.Atoi(s.NIP[9:10])
-	randDigit, _ := strconv.Atoi(s.NIP[11:15])
+	randDigit, _ := strconv.Atoi(s.NIP[11:13])
 	//Check if NIP length is 13
 	if len(s.NIP) != 13 {
 		return false
