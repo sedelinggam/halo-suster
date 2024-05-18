@@ -17,6 +17,7 @@ type medicalService struct {
 
 type MedicalService interface {
 	CreateMedicalRecord(ctx context.Context, requestData request.CreateMedicalRecord) (*response.CreateMedicalRecord, error)
+	GetMedicalRecords(ctx context.Context, requestData request.GetMedicalRecords) ([]*response.GetMedicalRecords, error)
 }
 
 func New(db *sqlx.DB) MedicalService {
