@@ -2,7 +2,9 @@ package v1
 
 import (
 	imageController "halo-suster/internal/delivery/http/v1/controller/image"
+	patientController "halo-suster/internal/delivery/http/v1/controller/patient"
 	userController "halo-suster/internal/delivery/http/v1/controller/user"
+	patientService "halo-suster/internal/service/patient"
 	userService "halo-suster/internal/service/user"
 	cryptoJWT "halo-suster/package/crypto/jwt"
 
@@ -16,7 +18,8 @@ import (
 
 func Init(app *echo.Echo, db *sqlx.DB, val *validator.Validate) {
 	var (
-		userSvc = userService.New(db)
+		userSvc    = userService.New(db)
+		patientSvc = patientService.New(db)
 	)
 
 	//Init JWT
@@ -25,4 +28,5 @@ func Init(app *echo.Echo, db *sqlx.DB, val *validator.Validate) {
 	v1 := app.Group("/v1")
 	imageController.Init(v1, val)
 	userController.Init(v1, val, userSvc, jwt)
+	patientController.Init(v1, val, patientSvc, jwt)
 }

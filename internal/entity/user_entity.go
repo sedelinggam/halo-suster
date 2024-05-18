@@ -27,6 +27,8 @@ func (s User) TableName() string {
 func (s User) CheckNIP(login bool) bool {
 	//Change string to INT
 
+	fmt.Println("NIP: ", s.NIP)
+
 	year, _ := strconv.Atoi(s.NIP[4:8])
 	month, _ := strconv.Atoi(s.NIP[9:10])
 	randDigit, _ := strconv.Atoi(s.NIP[11:13])
@@ -42,10 +44,8 @@ func (s User) CheckNIP(login bool) bool {
 	} else if year < 2000 || year > time.Now().Year() {
 		return false
 	} else if month < 1 || month > 12 {
-		fmt.Println("F", month)
 		return false
-	} else if randDigit < 1 || randDigit > 999 {
-		fmt.Println("G", randDigit)
+	} else if randDigit < 1 || randDigit > 99999 {
 		return false
 	}
 	return true
