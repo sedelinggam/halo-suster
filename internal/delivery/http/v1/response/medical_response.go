@@ -30,7 +30,7 @@ type GetMedicalRecords struct {
 	IdentityDetail PatientDetail `json:"identityDetail"`
 	Symptoms       string        `json:"symptoms"`
 	Medications    string        `json:"medications"`
-	CreatedAt      time.Time     `json:"createdAt"`
+	CreatedAt      string        `json:"createdAt"`
 	CreatedBy      CreatedBy     `json:"createdBy"`
 }
 
@@ -48,7 +48,7 @@ func MapMedicalRecordsEntityToResponse(e *entity.MedicalRecords) *GetMedicalReco
 		},
 		Symptoms:    e.Symptoms,
 		Medications: e.Medications,
-		CreatedAt:   e.CreatedAt,
+		CreatedAt:   e.CreatedAt.Format(time.RFC3339Nano),
 		CreatedBy: CreatedBy{
 			NIP:    userNIP,
 			Name:   e.UserName,
