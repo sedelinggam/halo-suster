@@ -20,7 +20,7 @@ func (uh userHandler) NursePassword(c echo.Context) error {
 		err    error
 	)
 
-	if id := c.Param("nurseId"); id != "" {
+	if id := c.Param("userId"); id != "" {
 		userId = id
 	}
 

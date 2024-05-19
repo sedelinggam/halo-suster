@@ -22,8 +22,12 @@ func (ss userService) UpdateUserNurse(ctx context.Context, nip int, name string,
 	}
 
 	err := ss.userRepo.UpdateUser(ctx, userData)
-
 	if err != nil {
+		if lumen.CheckErrorSQLNotFound(err) {
+			return nil, lumen.NewError(lumen.ErrNotFound, err)
+		} else if lumen.CheckErrorSQLUnique(err) {
+			return nil, lumen.NewError(lumen.ErrConflict, err)
+		}
 		return nil, lumen.NewError(lumen.ErrInternalFailure, err)
 	}
 

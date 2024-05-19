@@ -1,7 +1,6 @@
 package entity
 
 import (
-	"fmt"
 	valueobject "halo-suster/internal/value_object"
 	"strconv"
 	"time"
@@ -26,27 +25,26 @@ func (s User) TableName() string {
 
 func (s User) CheckNIP(login bool) bool {
 	//Change string to INT
-
-	fmt.Println("NIP: ", s.NIP)
-
-	year, _ := strconv.Atoi(s.NIP[4:8])
-	month, _ := strconv.Atoi(s.NIP[9:10])
-	randDigit, _ := strconv.Atoi(s.NIP[11:13])
 	//Check if NIP length is 13
-	if len(s.NIP) != 13 {
+	if len(s.NIP) < 13 || len(s.NIP) > 15 {
 		return false
-	} else if s.UserRole == valueobject.USER_ROLE_NURSE && s.NIP[0:3] != "303" && !login {
-		return false
-	} else if s.UserRole == valueobject.USER_ROLE_IT && s.NIP[0:3] != "615" && !login {
-		return false
-	} else if s.NIP[3:4] != "1" && s.NIP[3:4] != "2" {
-		return false
-	} else if year < 2000 || year > time.Now().Year() {
-		return false
-	} else if month < 1 || month > 12 {
-		return false
-	} else if randDigit < 1 || randDigit > 99999 {
-		return false
+	} else {
+		year, _ := strconv.Atoi(s.NIP[4:8])
+		month, _ := strconv.Atoi(s.NIP[8:10])
+		randDigit, _ := strconv.Atoi(s.NIP[10:len(s.NIP)])
+		if s.UserRole == valueobject.USER_ROLE_NURSE && s.NIP[0:3] != "303" && !login {
+			return false
+		} else if s.UserRole == valueobject.USER_ROLE_IT && s.NIP[0:3] != "615" && !login {
+			return false
+		} else if s.NIP[3:4] != "1" && s.NIP[3:4] != "2" {
+			return false
+		} else if year < 2000 || year > time.Now().Year() {
+			return false
+		} else if month < 1 || month > 12 {
+			return false
+		} else if randDigit < 1 || randDigit > 99999 {
+			return false
+		}
 	}
 	return true
 }

@@ -20,6 +20,9 @@ func (ss userService) DeleteUserNurse(ctx context.Context, requestData string) (
 		},
 	})
 	if err != nil {
+		if lumen.CheckErrorSQLNotFound(err) {
+			return nil, lumen.NewError(lumen.ErrNotFound, err)
+		}
 		return nil, lumen.NewError(lumen.ErrInternalFailure, err)
 	}
 

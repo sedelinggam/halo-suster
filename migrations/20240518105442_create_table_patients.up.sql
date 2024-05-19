@@ -13,3 +13,5 @@ CREATE TABLE patients (
 );
 
 CREATE INDEX patients_identity_number ON patients (identity_number);
+CREATE INDEX patients_gender_female ON patients (gender) WHERE gender = 'female';
+CREATE INDEX patients_gender_male ON patients (gender) WHERE gender = 'male';

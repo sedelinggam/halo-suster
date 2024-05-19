@@ -19,7 +19,7 @@ func (uh userHandler) NurseUpdate(c echo.Context) error {
 		userId string
 		err    error
 	)
-	if id := c.Param("nurseId"); id != "" {
+	if id := c.Param("userId"); id != "" {
 		userId = id
 	}
 	err = c.Bind(&req)

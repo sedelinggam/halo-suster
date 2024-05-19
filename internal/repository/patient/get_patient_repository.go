@@ -2,7 +2,6 @@ package patientRepository
 
 import (
 	"context"
-	"fmt"
 	"halo-suster/internal/entity"
 )
 
@@ -16,6 +15,6 @@ func (pr patientRepository) GetPatient(ctx context.Context, identityNumber strin
 	if err != nil {
 		return nil, err
 	}
-	fmt.Println(data)
+
 	return &data, nil
 }

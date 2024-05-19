@@ -16,5 +16,5 @@ func Init(group *echo.Group, val *validator.Validate, patientSvc patientService.
 	itRouterPrivate := patient
 	itRouterPrivate.Use(jwt)
 	itRouterPrivate.POST("", handler.CreatePatient)
-	itRouterPrivate.GET("", handler.CreatePatient)
+	itRouterPrivate.GET("", handler.GetPatient)
 }

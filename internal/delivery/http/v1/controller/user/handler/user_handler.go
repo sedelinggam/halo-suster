@@ -84,7 +84,6 @@ func (uh userHandler) User(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusOK, response.Common{
-		Message: "User updated successfully",
-		Data:    resp,
+		Data: resp,
 	})
 }

@@ -27,6 +27,9 @@ func (ss userService) AccessUserNurse(ctx context.Context, requestData string, p
 
 	err = ss.userRepo.UpdatePassword(ctx, userData)
 	if err != nil {
+		if lumen.CheckErrorSQLNotFound(err) {
+			return nil, lumen.NewError(lumen.ErrNotFound, err)
+		}
 		return nil, lumen.NewError(lumen.ErrInternalFailure, err)
 	}
 

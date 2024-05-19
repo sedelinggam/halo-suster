@@ -54,6 +54,13 @@ func (mh medicalHandler) GetMedicalRecords(c echo.Context) error {
 		req.Offset = 0
 	}
 
+	if createdAt := queries.Get("createdAt"); createdAt != "" {
+		err := mh.val.Var(queries.Get("createdAt"), "oneof=asc desc")
+		if err == nil {
+			req.CreatedAt = &createdAt
+		}
+	}
+
 	resp, err = mh.medicalService.GetMedicalRecords(c.Request().Context(), req)
 	if err != nil {
 		return lumen.FromError(err).SendResponse(c)

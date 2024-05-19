@@ -25,7 +25,7 @@ func (pr patientRepository) GetPatients(ctx context.Context, req request.Patient
 
 	if req.IdentityNumber != nil {
 		filter = append(filter, req.IdentityNumber)
-		conditions = append(conditions, fmt.Sprintf("identityNumber = $%d", len(filter)))
+		conditions = append(conditions, fmt.Sprintf("identity_number = $%d", len(filter)))
 	}
 
 	if req.PhoneNumber != nil {

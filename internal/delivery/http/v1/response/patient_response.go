@@ -3,6 +3,7 @@ package response
 import (
 	"halo-suster/internal/entity"
 	"strconv"
+	"time"
 )
 
 type CreatePatient struct {
@@ -17,6 +18,7 @@ type Patient struct {
 	BirthDate           string `json:"birthDate"`
 	Gender              string `json:"gender"`
 	IdentityCardScanImg string `json:"identityCardScanImg"`
+	CreatedAt           string `json:"createdAt"`
 }
 
 func MapPatientEntityToResponse(e *entity.Patient) *Patient {
@@ -28,6 +30,7 @@ func MapPatientEntityToResponse(e *entity.Patient) *Patient {
 		e.BirthDate,
 		e.Gender,
 		e.IdentityCardScanUrl,
+		e.CreatedAt.Format(time.RFC3339),
 	}
 }
 

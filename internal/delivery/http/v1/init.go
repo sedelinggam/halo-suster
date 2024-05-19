@@ -29,7 +29,7 @@ func Init(app *echo.Echo, db *sqlx.DB, val *validator.Validate) {
 	jwt := echojwt.WithConfig(cryptoJWT.JWTConfig())
 
 	v1 := app.Group("/v1")
-	imageController.Init(v1, val)
+	imageController.Init(v1, val, jwt)
 	userController.Init(v1, val, userSvc, jwt)
 	patientController.Init(v1, val, patientSvc, jwt)
 	medicalControllers.Init(v1, val, medicalSvc, jwt)
