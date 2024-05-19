@@ -1,7 +1,7 @@
 CREATE TYPE user_role AS ENUM ('it','nurse');
 CREATE TABLE users (
   id VARCHAR (26) PRIMARY KEY,
-  nip VARCHAR (13) UNIQUE NOT NULL,
+  nip VARCHAR (15) UNIQUE NOT NULL,
   name VARCHAR (50) NOT NULL,
   password VARCHAR (64) NULL,
   identity_card_scan_img VARCHAR NULL,

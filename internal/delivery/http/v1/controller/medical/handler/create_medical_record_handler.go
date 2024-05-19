@@ -2,6 +2,8 @@ package medicalHandler
 
 import (
 	"context"
+	"errors"
+	"fmt"
 	"halo-suster/internal/delivery/http/v1/request"
 	"halo-suster/internal/delivery/http/v1/response"
 	cryptoJWT "halo-suster/package/crypto/jwt"
@@ -28,6 +30,9 @@ func (mh medicalHandler) CreateMedicalRecord(c echo.Context) error {
 	if err != nil {
 		return lumen.FromError(lumen.NewError(lumen.ErrBadRequest, err)).SendResponse(c)
 
+	}
+	if len(fmt.Sprint(req.IdentityNumber)) != 16 {
+		return lumen.FromError(lumen.NewError(lumen.ErrBadRequest, errors.New("identity number not 16"))).SendResponse(c)
 	}
 
 	user := c.Get("user").(*jwt.Token)

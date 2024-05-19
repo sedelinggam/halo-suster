@@ -17,6 +17,7 @@ type patientService struct {
 type PatientService interface {
 	GetPatient(ctx context.Context, identityNumber string) (*entity.Patient, error)
 	CreatePatient(ctx context.Context, requestData request.CreatePatient) (*response.CreatePatient, error)
+	GetPatients(ctx context.Context, requestData request.PatientParam) ([]*response.Patient, error)
 }
 
 func New(db *sqlx.DB) PatientService {

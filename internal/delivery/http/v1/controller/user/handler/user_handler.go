@@ -83,8 +83,12 @@ func (uh userHandler) User(c echo.Context) error {
 		return lumen.FromError(err).SendResponse(c)
 	}
 
+	if resp == nil {
+		return c.JSON(http.StatusOK, response.Common{
+			Data: []response.UserNurse{},
+		})
+	}
 	return c.JSON(http.StatusOK, response.Common{
-		Message: "User updated successfully",
-		Data:    resp,
+		Data: resp,
 	})
 }

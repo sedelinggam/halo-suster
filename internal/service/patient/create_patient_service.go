@@ -39,11 +39,6 @@ func (ps patientService) CreatePatient(ctx context.Context, requestData request.
 		return nil, lumen.NewError(lumen.ErrBadRequest, err)
 	}
 
-	err = patient.CheckBirthDate()
-	if err != nil {
-		return nil, lumen.NewError(lumen.ErrBadRequest, err)
-	}
-
 	err = ps.patientRepo.Create(ctx, patient)
 	if err != nil {
 		//Duplicate unique key

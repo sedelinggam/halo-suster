@@ -18,7 +18,7 @@ func (uh userHandler) NurseDelete(c echo.Context) error {
 		err     error
 	)
 
-	if id := c.Param("nurseId"); id != "" {
+	if id := c.Param("userId"); id != "" {
 		nurseId = id
 	}
 

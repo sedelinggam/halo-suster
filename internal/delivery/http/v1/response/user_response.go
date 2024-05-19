@@ -14,10 +14,10 @@ type UserAccessToken struct {
 }
 
 type UserNurse struct {
-	UserID    string  `json:"nurseId"`
-	Nip       *int    `json:"nip,omitempty"`
-	CreatedAt *string `json:"createdAt,omitempty"`
-	Name      string  `json:"name,omitempty"`
+	UserID    string `json:"userId"`
+	Nip       *int   `json:"nip,omitempty"`
+	Name      string `json:"name,omitempty"`
+	CreatedAt string `json:"createdAt,omitempty"`
 }
 
 func MapUserEntityToResponse(e *entity.User) *UserNurse {
@@ -25,7 +25,7 @@ func MapUserEntityToResponse(e *entity.User) *UserNurse {
 	return &UserNurse{
 		e.ID,
 		&nipInt,
-		&e.Name,
+		e.Name,
 		e.CreatedAt.Format(time.RFC3339),
 	}
 }

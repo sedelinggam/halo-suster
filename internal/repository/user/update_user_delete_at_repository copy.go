@@ -9,7 +9,7 @@ import (
 
 func (cr userRepository) UpdateDeletedAt(ctx context.Context, data entity.User) error {
 	query := fmt.Sprintf(`UPDATE %s SET deleted_at = $1 WHERE id = $2 AND role = 'nurse'`, data.TableName())
-
+	fmt.Println("ZZZZZZZZZ", data.DeletedAt.Time, data.ID)
 	tx := cr.db.MustBegin()
 	res, err := tx.ExecContext(ctx, query, data.DeletedAt.Time, data.ID)
 	tx.Commit()

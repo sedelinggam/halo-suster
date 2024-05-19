@@ -8,3 +8,6 @@ CREATE TABLE medical_records (
   CONSTRAINT fk_identity_number FOREIGN KEY (identity_number) REFERENCES patients (identity_number),
   CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users (id)
 );
+
+
+CREATE INDEX medical_records_identity_number ON medical_records (identity_number);
