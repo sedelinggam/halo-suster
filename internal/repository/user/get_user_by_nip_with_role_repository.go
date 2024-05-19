@@ -14,7 +14,7 @@ func (sr userRepository) GetUserByNIPWithRole(ctx context.Context, nip string, r
 
 	query := fmt.Sprintf(`SELECT * FROM %s WHERE "nip" = $1 AND "role" = $2 AND "deleted_at" IS NULL`, resp.TableName())
 
-	err = sr.db.GetContext(ctx, &resp, query, nip, role)
+	err = sr.db.Get(&resp, query, nip, role)
 	if err != nil {
 		return nil, err
 	}

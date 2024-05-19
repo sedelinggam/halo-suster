@@ -10,7 +10,7 @@ func (pr patientRepository) GetPatient(ctx context.Context, identityNumber strin
 		data entity.Patient
 	)
 
-	err := pr.db.GetContext(ctx, &data, `SELECT * FROM patients WHERE identity_number=$1`, identityNumber)
+	err := pr.db.Get(&data, `SELECT * FROM patients WHERE identity_number=$1`, identityNumber)
 
 	if err != nil {
 		return nil, err

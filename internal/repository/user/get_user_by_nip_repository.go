@@ -14,7 +14,7 @@ func (sr userRepository) GetUserByNIP(ctx context.Context, nip string) (*entity.
 
 	query := fmt.Sprintf(`SELECT * FROM %s WHERE "nip" = $1`, resp.TableName())
 
-	err = sr.db.GetContext(ctx, &resp, query, nip)
+	err = sr.db.Get(&resp, query, nip)
 	if err != nil {
 		return nil, err
 	}
