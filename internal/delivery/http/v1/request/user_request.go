@@ -9,7 +9,7 @@ type ITUserRegister struct {
 type NurseUserRegister struct {
 	NIP                   int    `json:"nip" validate:"required"`
 	Name                  string `json:"name" validate:"required,min=5,max=50"`
-	IdentityCardScanImage string `json:"identityCardScanImg" validate:"required,min=5,max=15"`
+	IdentityCardScanImage string `json:"identityCardScanImg" validate:"required"`
 }
 
 type NurseUserUpdate struct {

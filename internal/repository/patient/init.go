@@ -13,6 +13,7 @@ type patientRepository struct {
 
 type PatientRepository interface {
 	Create(ctx context.Context, data entity.Patient) error
+	GetPatient(ctx context.Context, identityNumber string) (*entity.Patient, error)
 }
 
 func New(db *sqlx.DB) PatientRepository {

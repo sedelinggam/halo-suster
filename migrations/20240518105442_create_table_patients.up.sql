@@ -1,4 +1,5 @@
-CREATE TYPE patient_gender AS ENUM ('male','female');
+CREATE TYPE patient_gender AS ENUM ('male', 'female');
+
 CREATE TABLE patients (
     id VARCHAR (26) PRIMARY KEY,
     identity_number VARCHAR (16) UNIQUE NOT NULL,
@@ -10,3 +11,5 @@ CREATE TABLE patients (
     created_at TIMESTAMPTZ NOT NULL,
     deleted_at TIMESTAMPTZ NULL
 );
+
+CREATE INDEX patients_identity_number ON patients (identity_number);
