@@ -14,15 +14,15 @@ import (
 )
 
 func UploadFile(key string, file *multipart.FileHeader) (string, error) {
-	bucket := os.Getenv("S3_BUCKET_NAME")
-	region := os.Getenv("S3_REGION")
+	bucket := os.Getenv("AWS_S3_BUCKET_NAME")
+	region := os.Getenv("AWS_REGION")
 
 	// Load the Shared AWS Configuration (~/.aws/config)
 	cfg, err := config.LoadDefaultConfig(context.TODO(),
 		config.WithRegion(region),
 		config.WithCredentialsProvider(credentials.NewStaticCredentialsProvider(
-			os.Getenv("S3_ID"),
-			os.Getenv("S3_SECRET_KEY"),
+			os.Getenv("AWS_ACCESS_KEY_ID"),
+			os.Getenv("AWS_SECRET_ACCESS_KEY"),
 			"",
 		)),
 	)
