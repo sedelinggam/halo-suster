@@ -12,7 +12,7 @@ func Init(group *echo.Group, val *validator.Validate, jwt echo.MiddlewareFunc) {
 	handler := imageHandler.NewHandler(val)
 
 	privateRoute := image
-	// TODO: Add middleware
 	privateRoute.Use(jwt)
+	// TODO: Add middleware
 	privateRoute.POST("", handler.StoreImage)
 }
