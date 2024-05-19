@@ -7,6 +7,7 @@ import (
 	"halo-suster/internal/delivery/http/v1/response"
 	"halo-suster/internal/entity"
 	"halo-suster/package/lumen"
+	"strconv"
 )
 
 func (ss userService) UpdateUserNurse(ctx context.Context, nip int, name string, userId string) (*response.UserNurse, error) {
@@ -19,6 +20,12 @@ func (ss userService) UpdateUserNurse(ctx context.Context, nip int, name string,
 	//Check NIP
 	if validNIP := userData.CheckNIP(false); !validNIP {
 		return nil, lumen.NewError(lumen.ErrBadRequest, errors.New("NIP not valid"))
+	}
+
+	//Get User
+	user, _ := ss.userRepo.GetUserByNIP(ctx, strconv.Itoa(nip))
+	if user != nil {
+		return nil, lumen.NewError(lumen.ErrConflict, errors.New("nip already exist"))
 	}
 
 	err := ss.userRepo.UpdateUser(ctx, userData)

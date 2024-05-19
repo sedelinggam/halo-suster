@@ -15,6 +15,7 @@ type userRepository struct {
 type UserRepository interface {
 	Create(ctx context.Context, data entity.User) error
 	GetUserByNIPWithRole(ctx context.Context, nip string, role string) (*entity.User, error)
+	GetUserByNIP(ctx context.Context, nip string) (*entity.User, error)
 	UpdateDeletedAt(ctx context.Context, data entity.User) error
 	UpdatePassword(ctx context.Context, data entity.User) error
 	UpdateUser(ctx context.Context, data entity.User) error
